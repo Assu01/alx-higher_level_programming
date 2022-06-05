@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 # 6-print_matrix_integer.py
 
-#!/usr/bin/python3
+
 def print_matrix_integer(matrix=[[]]):
-    for e in matrix:
-        for i in e:
-            print('{:d}'.format(i), end='')
-            if i != e[-1]:
-                print(' ', end='')
+    for row in range(len(matrix)):
+        for column in range(len(matrix[row])):
+            print("{:d}".format(matrix[row][column]), end="")
+            if column != (len(matrix[row]) - 1):
+                print(" ", end="")
         print("")
