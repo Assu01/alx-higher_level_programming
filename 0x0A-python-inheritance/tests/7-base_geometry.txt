@@ -1,149 +1,79 @@
-# 7-base_geometry.txt
+>>> base_geometry = __import__("7-base_geometry").BaseGeometry
 
-=============================
-How to Use 7-base_geometry.py
-=============================
+>>> len(__import__("7-base_geometry").__doc__) > 1
+True
 
-This modules defines a base geometry class BaseGeometry.
+>>> len(__import__("7-base_geometry").BaseGeometry.__doc__) > 1
+True
 
-Instantiation
-=============
+>>> met = __import__("7-base_geometry").BaseGeometry.integer_validator.__doc__
+>>> len(met) > 1
+True
 
-``BaseGeometry`` includes no attributes, and accordingly is initialized 
-with no arguments.
+>>> ar = base_geometry()
+>>> ar.area()
+Traceback (most recent call last):
+...
+Exception: area() is not implemented
 
-::
+>>> ar.area(33)
+Traceback (most recent call last):
+...
+TypeError: area() takes 1 positional argument but 2 were given
 
-    >>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
-    >>> bg = BaseGeometry()
-    >>> type(bg)
-    <class '7-base_geometry.BaseGeometry'>
+>>> ar.integer_validator("integer", 555)
 
-::
+>>> ar.integer_validator("test", 0)
+Traceback (most recent call last):
+...
+ValueError: test must be greater than 0
 
-    >>> print(bg) # doctest: +ELLIPSIS
-    <7-base_geometry.BaseGeometry object at ...>
+>>> ar.integer_validator("test2", -444)
+Traceback (most recent call last):
+...
+ValueError: test2 must be greater than 0
 
-In fact, any arguments supplied to an instantiation of ``BaseGeometry`` results
-in a TypeError.
+>>> ar.integer_validator("string", "python")
+Traceback (most recent call last):
+...
+TypeError: string must be an integer
 
-::
+>>> ar.integer_validator("float", -444.54)
+Traceback (most recent call last):
+...
+TypeError: float must be an integer
 
-    >>> bg = BaseGeometry(None)
-    Traceback (most recent call last):
-    TypeError: object() takes no parameters
+>>> ar.integer_validator("bool", True)
+Traceback (most recent call last):
+...
+TypeError: bool must be an integer
 
-Methods
-=======
+>>> ar.integer_validator("list", [1, 2, 3])
+Traceback (most recent call last):
+...
+TypeError: list must be an integer
 
-``BaseGeometry`` features two methods - ``area(self)`` and 
-``integer_validator(self, name, value)``. ``area(...)`` is not yet
-implemented.
+>>> ar.integer_validator("tuple", (22, 333))
+Traceback (most recent call last):
+...
+TypeError: tuple must be an integer
 
-::
+>>> ar.integer_validator("complex", complex(33, 44))
+Traceback (most recent call last):
+...
+TypeError: complex must be an integer
 
-    >>> bg = BaseGeometry()
-    >>> print(bg.area) # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
-    <bound method BaseGeometry.area of <7-base_geometry.BaseGeometry 
-     object at...>>
+>>> ar.integer_validator("dict", {"key": "value"})
+Traceback (most recent call last):
+...
+TypeError: dict must be an integer
 
-::
+>>> ar.integer_validator("set", {22, "python"})
+Traceback (most recent call last):
+...
+TypeError: set must be an integer
 
-    >>> bg.area()
-    Traceback (most recent call last):
-    Exception: area() is not implemented
-
-The second method, ``integer_validator(...)``, validates the integer value
-of a paramter. The first parameter, ``name``, is the name of the argument to
-check. The second argument, ``value``, is the argument to check.
-
-::
-
-    >>> print(bg.integer_validator) # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
-    <bound method BaseGeometry.integer_validator of <7-base_geometry.BaseGeometry 
-    object at...>>
-
-If ``value`` is a valid integer, the function does nothing.
-
-::
-
-
-   >>> bg.integer_validator("valid number", 1)
-
-But, if ``value`` is not an integer, a ``TypeError`` is raised.
-
-::
-
-    >>> bg.integer_validator("invalid number", "number")
-    Traceback (most recent call last):
-    TypeError: invalid number must be an integer
-
-::
-
-    >>> bg.integer_validator("another invalid", True)
-    Traceback (most recent call last):
-    TypeError: another invalid must be an integer
-
-::
-
-    >>> bg.integer_validator("invalid tuple", (1,))
-    Traceback (most recent call last):
-    TypeError: invalid tuple must be an integer
-
-::
-
-    >>> bg.integer_validator("and another", [3])
-    Traceback (most recent call last):
-    TypeError: and another must be an integer
-
-::
-
-    >>> bg.integer_validator("more invalid testing", {3, 4})
-    Traceback (most recent call last):
-    TypeError: more invalid testing must be an integer
-
-::
-
-    >>> bg.integer_validator("absolutely every possible invalid", None)
-    Traceback (most recent call last):
-    TypeError: absolutely every possible invalid must be an integer
-
-And if ``value`` is an integer, but less than or equal to zero, a ValueError
-is raised.
-
-::
-
-    >>> bg.integer_validator("invalid int", -1)
-    Traceback (most recent call last):
-    ValueError: invalid int must be greater than 0
-
-::
-
-    >>> bg.integer_validator("invalid int", 0)
-    Traceback (most recent call last):
-    ValueError: invalid int must be greater than 0
-
-Both ``name`` and ``value`` must be provided. Otherwise, a TypeError is raised.
-
-::
-
-    >>> bg.integer_validator() # doctest: +NORMALIZE_WHITESPACE
-    Traceback (most recent call last):
-    TypeError: integer_validator() missing 2 required positional arguments: 
-    'name' and 'value'
-
-::
-
-    >>> bg.integer_validator(None) # doctest: +NORMALIZE_WHITESPACE
-    Traceback (most recent call last):
-    TypeError: integer_validator() missing 1 required positional argument: 
-    'value'
-
-The method assumes the paramter ``name`` will be a string, but ``name`` of any
-type will be printed.
-
-::
-
-    >>> bg.integer_validator({"a": 1}, (1, 2))
-    Traceback (most recent call last):
-    TypeError: {'a': 1} must be an integer
+>>> ar.integer_validator("blue", None)
+Traceback (most recent call last):
+...
+TypeError: blue must be an integer
