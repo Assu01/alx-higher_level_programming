@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# 7-add_item.py
+'''task 7 module'''
 
 
 import sys
